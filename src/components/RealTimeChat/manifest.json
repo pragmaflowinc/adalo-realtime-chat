@@ -1,0 +1,266 @@
+{
+  "displayName": "RealTime Chat",
+  "defaultWidth": 160,
+  "defaultHeight": 24,
+  "resizeX": true,
+  "resizeY": true,
+  "components": "./index.js",
+  "icon": "./example-thumbnail.png",
+  "props": [
+    {
+      "name": "adaloMessages",
+      "displayName": "List of Messages",
+      "type": "list"
+    },
+    {
+      "name": "apiKey",
+      "global": true,
+      "displayName": "Ably API key",
+      "type": "text",
+      "default": ""
+    },
+    {
+      "name": "clientId",
+      "displayName": "Who are you?",
+      "type": "text",
+      "default": ""
+    },
+    {
+      "name": "channelName",
+      "displayName": "Name of the socket channel",
+      "type": "text",
+      "default": ""
+    },
+    {
+      "name": "subscriptionKey",
+      "displayName": "Name of the subchannel to subscribe",
+      "type": "text",
+      "default": ""
+    },
+    {
+      "name": "onSend",
+      "displayName": "Triggered when messages is sent (update the database!)",
+      "type": "action",
+      "arguments": [
+        {
+          "displayName": "Messages",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "name": "backgroundColor",
+      "displayName": "Background Color",
+      "type": "color"
+    }
+  ],
+  "childComponents": [
+    {
+      "name": "messageData",
+      "displayName": "Message Data",
+      "role": "listItem",
+      "reference": "adaloMessages",
+      "props": [
+        {
+          "name": "message",
+          "displayName": "Message",
+          "type": "text"
+        },
+        {
+          "name": "senderId",
+          "displayName": "Sender Id",
+          "type": "text"
+        },
+        {
+          "name": "createdDate",
+          "displayName": "Created Date",
+          "type": "date"
+        }
+      ]
+    },
+    {
+      "name": "sendButton",
+      "displayName": "Send Button",
+      "props": [
+        {
+          "name": "buttonIcon",
+          "displayName": "Button Icon",
+          "type": "icon",
+          "defaultValue": "send"
+        },
+        {
+          "name": "buttonIconColor",
+          "displayName": "Button Icon Color",
+          "type": "color"
+        },
+        {
+          "name": "showSendingIndicator",
+          "displayName": "Show sending indicator",
+          "type": "boolean"
+        },
+        {
+          "name": "indicatorColor",
+          "displayName": "Indicator Color",
+          "type": "color",
+          "enabled": {
+            "showSendingIndicator": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "inputStyle",
+      "displayName": "Input Styles",
+      "props": [
+        {
+          "name": "borderColor",
+          "displayName": "Border Color",
+          "type": "color"
+        },
+        {
+          "name": "borderWidth",
+          "displayName": "Border Width",
+          "type": "number",
+          "control": {
+            "type": "slider",
+            "min": 0,
+            "max": 100
+          }
+        },
+        {
+          "name": "borderRadius",
+          "displayName": "Border Radius",
+          "type": "number",
+          "control": {
+            "type": "slider",
+            "min": 0,
+            "max": 100
+          }
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Background Color",
+          "type": "color"
+        }
+      ]
+    },
+    {
+      "name": "senderChatWindow",
+      "displayName": "Sender Chat Style",
+      "props": [
+        {
+          "name": "backgroundColor",
+          "displayName": "Background Color",
+          "type": "color"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Text Color",
+          "type": "color"
+        },
+        {
+          "name": "borderRadius",
+          "displayName": "Border Radius",
+          "type": "number",
+          "control": {
+            "type": "slider",
+            "min": 0,
+            "max": 100
+          }
+        },
+        {
+          "name": "marginLeft",
+          "displayName": "Left Margin",
+          "type": "number",
+          "default": 50,
+          "control": {
+            "type": "slider",
+            "min": 0,
+            "max": 100
+          }
+        },
+        {
+          "name": "marginRight",
+          "displayName": "Right Margin",
+          "type": "number",
+          "default": 50,
+          "control": {
+            "type": "slider",
+            "min": 0,
+            "max": 100
+          }
+        },
+        {
+          "name": "padding",
+          "displayName": "Padding",
+          "type": "number",
+          "default": 10,
+          "control": {
+            "type": "slider",
+            "min": 0,
+            "max": 100
+          }
+        }
+      ]
+    },
+    {
+      "name": "receivedChatWindow",
+      "displayName": "Receiver Chat Style",
+      "props": [
+        {
+          "name": "backgroundColor",
+          "displayName": "Background Color",
+          "type": "color"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Text Color",
+          "type": "color"
+        },
+        {
+          "name": "borderRadius",
+          "displayName": "Border Radius",
+          "type": "number",
+          "control": {
+            "type": "slider",
+            "min": 0,
+            "max": 100
+          }
+        },
+        {
+          "name": "marginLeft",
+          "displayName": "Left Margin",
+          "type": "number",
+          "default": 50,
+          "control": {
+            "type": "slider",
+            "min": 0,
+            "max": 100
+          }
+        },
+        {
+          "name": "marginRight",
+          "displayName": "Right Margin",
+          "type": "number",
+          "default": 50,
+          "control": {
+            "type": "slider",
+            "min": 0,
+            "max": 100
+          }
+        },
+        {
+          "name": "padding",
+          "displayName": "Padding",
+          "type": "number",
+          "default": 10,
+          "control": {
+            "type": "slider",
+            "min": 0,
+            "max": 100
+          }
+        }
+      ]
+    }
+  ]
+}
