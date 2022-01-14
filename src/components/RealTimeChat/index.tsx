@@ -18,6 +18,7 @@ class RealTimeChat extends Component<
     messages: any[];
     ably?: Ably.Realtime;
     channel?: Ably.Types.RealtimeChannelCallbacks;
+    oneTimeUpdate: boolean;
   }
 > {
   constructor(props: RealTimeChatProps) {
@@ -32,7 +33,8 @@ class RealTimeChat extends Component<
       senderId: `${this.props.clientId}+1`
     }]
     this.state = {
-      messages: !!props.editor ? sampleMessages : [],
+      oneTimeUpdate: (this.props.adaloMessages?.length || 0) > 0,
+      messages: !!props.editor ? sampleMessages : this.props.adaloMessages?.map(message => message.messageData) || [],
     };
     this.onMessage = this.onMessage.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
@@ -72,6 +74,10 @@ class RealTimeChat extends Component<
   }
   componentDidUpdate(prevProps: RealTimeChatProps) {
     if (!this.props.editor) {
+
+      if (this.state.messages.length === 0 && (this.props.adaloMessages || [])?.length > 0) {
+        this.setState({ messages: this.props.adaloMessages?.map(message => message.messageData) || []})
+      }
       if (
         this.state.channel &&
         this.props.subscriptionKey &&
@@ -117,7 +123,7 @@ class RealTimeChat extends Component<
         >
           <FlatList
             style={{ flex: 1 }}
-            data={[...this.state.messages, ...(this.props.adaloMessages?.map(message => message.messageData) || [])]}
+            data={this.state.messages}
             renderItem={({ item }) => <ChatMessage receiverStyle={this.props.receivedChatWindow} senderStyle={this.props.senderChatWindow} myId={this.props.clientId || ''} message={item} />}
             keyExtractor={(item) => `item!.id`}
             inverted
